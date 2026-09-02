@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
-int main()
+#include <stdlib.h>
+int main(void)
 {
 	//数据在计算机上储存的时候。存的是2进制
 	//给每个字符编号，A-65，a-97，......均为ASCII编码，每个字符都有对应的ASCII码值
@@ -43,18 +44,39 @@ int main()
 \xhh   十六进制表示字符，\x41='A'                    
 */
 //	printf("%d\n", strlen("c:\test\32\test.c"));//13     \t是一个转义字符  \32是一个转义字符，即32作为一个八进制数字所代表的十进制数字，作为ASCII码值所对应的字符
-	SetConsoleOutputCP(CP_UTF8);   // 设置控制台输出为UTF‑8
+
+	SetConsoleOutputCP(CP_UTF8);   // 设置控制台输出为UTF‑8，解决输出乱码最有效的办法
 	SetConsoleCP(CP_UTF8);
+/*
 	int input = 0;
 	printf("加入比特\n");
 	printf("你要好好学习吗？(1/0)>:");
 	scanf("%d", &input);
-	if(input == 1)
+	if(input == 1)         //不要有分号
 	    printf("好offer\n");
 	else
 		printf("卖红薯\n");
-
-
-
+*/
+	//循环语句      while语句，for语句，do...while语句
+	
+	
+	//printf函数中出现中文，Windows容易乱码
+	//Windows 控制台默认编码：GBK
+	//代码文件保存编码：UTF‑8 → 直接运行就中文乱码
+	/*解决方案有
+	* 开头引入#include <stdlib.h>
+	*/
+	// setvbuf(stdout, NULL, _IONBF, 0);//设置stdout无缓冲，关闭输出缓冲
+	int line = 0;
+	printf("加入比特\n");
+	while (line < 20000)      //while(条件):分号不要随手敲，分号就是一条空语句。
+	{
+		printf("敲一行代码,%d\n",line);//并不是换行符失效，是Windows系统没有反应过来，需要fflush(stdout)来缓冲，不管用
+		//fflush(stdout);
+		line ++;
+	}
+	if(line>=20000)
+	printf("good offer\n");
+	//不知道原因是什么
 	return 0;
 }
